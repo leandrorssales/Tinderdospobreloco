@@ -96,10 +96,35 @@
       margin-bottom: 25px;
       color: #fd297b;
     }
+
+    #gifScreen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    #gifScreen img {
+      width: 100%;
+      border-radius: 15px;
+    }
+
+    #gifScreen h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #fd297b;
+    }
+
+    audio {
+      display: none; /* esconde o player */
+    }
   </style>
 </head>
 <body>
 
+  <!-- Tela dos perfis -->
   <div class="card" id="profileCard">
     <img src="https://via.placeholder.com/300x200.png?text=Perfil+1" alt="Perfil">
     <h3>Leandro Sales(a), 37</h3>
@@ -110,31 +135,29 @@
     </div>
   </div>
 
+  <!-- Tela final com pergunta -->
   <div class="card" id="final">
     <h2>💍 Quer casar comigo?</h2>
     <div class="buttons">
       <button class="btn no" onclick="alert('Você disse não 😢')">❌</button>
-      <button class="btn yes" onclick="alert('Você disse SIM! 💖')">💚</button>
+      <button class="btn yes" onclick="showGIF()">💚</button>
     </div>
   </div>
 
+  <!-- Tela do GIF com música -->
+  <!-- Tela do GIF com música -->
+<div id="gifScreen">
+  <h2 style="color: white;">💖 Eu te amo!</h2>
+  <img src="https://i.gifer.com/RdSl.gif" alt="GIF de amor">
+  <audio id="audio" src="assets/sounds/Coldplay_Cold_Play_Yellow.mp3" autoplay></audio>
+</div>
+
+
   <script>
     const profiles = [
-      {
-        img: "https://via.placeholder.com/300x200.png?text=Perfil+1",
-        name: "Leandro Sales(a), 28",
-        desc: "Apaixonado(a) por aventuras e bons momentos."
-      },
-      {
-        img: "https://via.placeholder.com/300x200.png?text=Nós+6+Anos",
-        name: "Nós, 6 Anos",
-        desc: "Entre tempestades e bonanças, nosso amor e amizade sempre floresceram..."
-      },
-      {
-        img: "https://via.placeholder.com/300x200.png?text=VOCÊ",
-        name: "VOCÊ 💕",
-        desc: "A pessoa que eu escolhi para viver ao meu lado."
-      }
+      { img: "https://via.placeholder.com/300x200.png?text=Perfil+1", name: "Leandro Sales(a), 28", desc: "Apaixonado(a) por aventuras e bons momentos." },
+      { img: "https://via.placeholder.com/300x200.png?text=Nós+6+Anos", name: "Nós, 6 Anos", desc: "Entre tempestades e bonanças, nosso amor e amizade sempre floresceram..." },
+      { img: "https://via.placeholder.com/300x200.png?text=VOCÊ", name: "VOCÊ 💕", desc: "A pessoa que eu escolhi para viver ao meu lado." }
     ];
 
     let current = 0;
@@ -142,7 +165,7 @@
     function nextProfile() {
       current++;
       if (current < profiles.length) {
-        let card = document.getElementById("profileCard");
+        const card = document.getElementById("profileCard");
         card.querySelector("img").src = profiles[current].img;
         card.querySelector("h3").textContent = profiles[current].name;
         card.querySelector("p").textContent = profiles[current].desc;
@@ -150,6 +173,13 @@
         document.getElementById("profileCard").style.display = "none";
         document.getElementById("final").style.display = "block";
       }
+    }
+
+    function showGIF() {
+      document.getElementById("final").style.display = "none";
+      const gifScreen = document.getElementById("gifScreen");
+      gifScreen.style.display = "flex";
+      document.getElementById("audio").play();
     }
   </script>
 </body>
