@@ -1,98 +1,138 @@
-
-
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pedido de Casamento</title>
+  <title>Tinder do Amor 💖</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #fd297b, #ff655b, #ff9a6c);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       margin: 0;
+      color: #fff;
     }
+
     .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      width: 300px;
+      background: #fff;
+      color: #333;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      width: 320px;
       padding: 20px;
       text-align: center;
       position: relative;
+      transition: all 0.3s ease;
     }
+
     .card img {
       width: 100%;
-      border-radius: 10px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 15px;
     }
+
+    .card h3 {
+      margin: 15px 0 5px 0;
+      font-size: 22px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #666;
+    }
+
     .buttons {
-      margin-top: 15px;
+      margin-top: 20px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-evenly;
     }
+
     .btn {
-      padding: 10px 20px;
+      width: 60px;
+      height: 60px;
       border: none;
-      border-radius: 5px;
+      border-radius: 50%;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
     }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
     .no {
-      background-color: #ff4d4d;
+      background-color: #ff4458;
       color: white;
+      box-shadow: 0 4px 10px rgba(255,68,88,0.5);
     }
+
     .yes {
-      background-color: #4CAF50;
+      background-color: #1ed760;
       color: white;
+      box-shadow: 0 4px 10px rgba(30,215,96,0.5);
     }
+
     #final {
       display: none;
       text-align: center;
+      background: #fff;
+      color: #333;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      padding: 30px;
+      width: 320px;
     }
+
     #final h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: 26px;
+      margin-bottom: 25px;
+      color: #fd297b;
     }
   </style>
 </head>
 <body>
+
   <div class="card" id="profileCard">
     <img src="https://via.placeholder.com/300x200.png?text=Perfil+1" alt="Perfil">
     <h3>Leandro Sales(a), 37</h3>
-    <p>Palmerense doente, as vezes meio chato</p>
+    <p>Palmeirense doente, às vezes meio chato 😅</p>
     <div class="buttons">
       <button class="btn no" onclick="nextProfile()">❌</button>
-      <button class="btn yes" onclick="nextProfile()">✅</button>
+      <button class="btn yes" onclick="nextProfile()">💚</button>
     </div>
   </div>
 
   <div class="card" id="final">
     <h2>💍 Quer casar comigo?</h2>
     <div class="buttons">
-      <button class="btn no" onclick="alert('Você disse não 😢')">❌ Não</button>
-      <button class="btn yes" onclick="alert('Você disse SIM! 💖')">✅ Sim</button>
+      <button class="btn no" onclick="alert('Você disse não 😢')">❌</button>
+      <button class="btn yes" onclick="alert('Você disse SIM! 💖')">💚</button>
     </div>
   </div>
 
   <script>
-    let profiles = [
+    const profiles = [
       {
         img: "https://via.placeholder.com/300x200.png?text=Perfil+1",
         name: "Leandro Sales(a), 28",
         desc: "Apaixonado(a) por aventuras e bons momentos."
       },
       {
-        img: "https://via.placeholder.com/300x200.png?text=Perfil+2",
+        img: "https://via.placeholder.com/300x200.png?text=Nós+6+Anos",
         name: "Nós, 6 Anos",
-        desc: "Entre tempestades e bonanças, nosso amor e amizade sempre floresceram, mesmo diante dos ventos mais fortes. Dois corações teimosos, que se encontraram no meio do caos, decidiram caminhar juntos por uma estrada feita de carinho, paz e desafios — todos eles superados com a força de estarmos lado a lado. Porque, no fim, o que nos une é maior do que qualquer obstáculo: é o amor que escolhemos viver, todos os dias."
+        desc: "Entre tempestades e bonanças, nosso amor e amizade sempre floresceram..."
       },
       {
         img: "https://via.placeholder.com/300x200.png?text=VOCÊ",
-        name: "VOCÊ",
+        name: "VOCÊ 💕",
         desc: "A pessoa que eu escolhi para viver ao meu lado."
       }
     ];
@@ -113,4 +153,4 @@
     }
   </script>
 </body>
-</html>"
+</html>
