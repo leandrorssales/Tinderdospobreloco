@@ -1,186 +1,325 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tinder do Amor 💖</title>
-  <style>
-    body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #fd297b, #ff655b, #ff9a6c);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tinder do Amor 💖</title>
 
-    .card {
-      background: #fff;
-      color: #333;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      width: 320px;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-      transition: all 0.3s ease;
-    }
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #dcdcdc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
 
-    .card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 15px;
-    }
+  /* Moldura do celular */
+  .phone-frame {
+    width: 380px;
+    height: 780px;
+    background: linear-gradient(145deg, #111, #222);
+    border: 3px solid #333;
+    border-radius: 60px;
+    padding: 14px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4),
+                inset 0 0 8px rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
 
-    .card h3 {
-      margin: 15px 0 5px 0;
-      font-size: 22px;
-    }
+  .phone-frame::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-radius: 60px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+  }
 
-    .card p {
-      font-size: 15px;
-      color: #666;
-    }
+  .notch {
+    width: 180px;
+    height: 30px;
+    background: #000;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-evenly;
-    }
+  .camera {
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
 
-    .btn {
-      width: 60px;
-      height: 60px;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease;
-    }
+  .speaker {
+    width: 60px;
+    height: 6px;
+    background: #222;
+    border-radius: 3px;
+  }
 
-    .btn:hover {
-      transform: scale(1.1);
-    }
+  .screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 46px;
+    background: linear-gradient(180deg, #ff5f6d, #ffc371);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-    .no {
-      background-color: #ff4458;
-      color: white;
-      box-shadow: 0 4px 10px rgba(255,68,88,0.5);
-    }
+  .screen::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
+    pointer-events: none;
+  }
 
-    .yes {
-      background-color: #1ed760;
-      color: white;
-      box-shadow: 0 4px 10px rgba(30,215,96,0.5);
-    }
+  /* Cartão de perfil */
+  .card {
+    background: #fff;
+    color: #333;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+    padding: 20px 15px 25px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    position: absolute;
+  }
 
-    #final {
-      display: none;
-      text-align: center;
-      background: #fff;
-      color: #333;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      padding: 30px;
-      width: 320px;
-    }
+  .card img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
 
-    #final h2 {
-      font-size: 26px;
-      margin-bottom: 25px;
-      color: #fd297b;
-    }
+  .card h3 {
+    font-size: 20px;
+    margin: 10px 0 5px;
+  }
 
-    #gifScreen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      width: 90%;
-      max-width: 600px;
-    }
+  .card p {
+    font-size: 14px;
+    color: #666;
+  }
 
-    #gifScreen img {
-      width: 100%;
-      border-radius: 15px;
-    }
+  .buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
 
-    #gifScreen h2 {
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: #fd297b;
-    }
+  .btn {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
 
-    audio {
-      display: none; /* esconde o player */
-    }
-  </style>
+  .btn:hover { transform: scale(1.1); }
+
+  .no {
+    background-color: #ff4458;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255,68,88,0.5);
+  }
+
+  .yes {
+    background-color: #1ed760;
+    color: white;
+    box-shadow: 0 4px 10px rgba(30,215,96,0.5);
+  }
+
+  #final, #gifScreen {
+    display: none;
+    text-align: center;
+  }
+
+  #final h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #fd297b;
+  }
+
+  #gifScreen {
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    animation: fadeIn 1.5s ease forwards;
+  }
+
+  #gifScreen img {
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 10px;
+  }
+
+  #gifScreen h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #fff;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.9);}
+    to {opacity: 1; transform: scale(1);}
+  }
+</style>
 </head>
+
 <body>
-
-  <!-- Tela dos perfis -->
-  <div class="card" id="profileCard">
-    <img src="https://via.placeholder.com/300x200.png?text=Perfil+1" alt="Perfil">
-    <h3>Leandro Sales(a), 37</h3>
-    <p>Palmeirense doente, às vezes meio chato 😅</p>
-    <div class="buttons">
-      <button class="btn no" onclick="nextProfile()">❌</button>
-      <button class="btn yes" onclick="nextProfile()">💚</button>
-    </div>
+<div class="phone-frame">
+  <div class="notch">
+    <div class="camera"></div>
+    <div class="speaker"></div>
   </div>
 
-  <!-- Tela final com pergunta -->
-  <div class="card" id="final">
-    <h2>💍 Quer casar comigo?</h2>
-    <div class="buttons">
-      <button class="btn no" onclick="alert('Você disse não 😢')">❌</button>
-      <button class="btn yes" onclick="showGIF()">💚</button>
+  <div class="screen">
+    <!-- PERFIL -->
+    <div class="card" id="profileCard">
+      <img src="https://via.placeholder.com/400x300.png?text=Perfil+1" alt="Perfil">
+      <h3>Leandro Sales(a), 37</h3>
+      <p>Palmeirense doente, às vezes meio chato 😅</p>
+      <div class="buttons">
+        <button class="btn no" onclick="nextProfile()">❌</button>
+        <button class="btn yes" onclick="nextProfile()">💚</button>
+      </div>
+    </div>
+
+    <!-- TELA FINAL -->
+    <div class="card" id="final">
+      <h2>💍 Quer casar comigo?</h2>
+      <div class="buttons">
+        <button class="btn no" onclick="alert('Você disse não 😢')">❌</button>
+        <button class="btn yes" onclick="showGIF()">💚</button>
+      </div>
+    </div>
+
+    <!-- GIF FINAL -->
+    <div id="gifScreen">
+      <h2>💖 Eu te amo!</h2>
+      <img src="https://media1.tenor.com/m/HBwkcxybzS8AAAAd/smallville-clark-kent.gif" alt="Gif do amor">
+      <audio id="audio" src="assets/sounds/Coldplay_Cold_Play_Yellow.mp3" autoplay></audio>
     </div>
   </div>
-
-  <!-- Tela do GIF com música -->
-  <!-- Tela do GIF com música -->
-<div id="gifScreen">
-  <h2 style="color: white;">💖 Eu te amo!</h2>
-  <img src="https://i.gifer.com/RdSl.gif" alt="GIF de amor">
-  <audio id="audio" src="assets/sounds/Coldplay_Cold_Play_Yellow.mp3" autoplay></audio>
 </div>
 
+<script>
+  const profiles = [
+    { img: "https://via.placeholder.com/400x300.png?text=Perfil+1", name: "Leandro Sales(a), 37", desc: "Palmeirense doente, às vezes meio chato 😅" },
+    { img: "https://via.placeholder.com/400x300.png?text=N%C3%B3s+6+Anos", name: "Nós, 6 Anos", desc: "Entre tempestades e bonanças, nosso amor sempre floresceu 💞" },
+    { img: "https://via.placeholder.com/400x300.png?text=VOC%C3%8A", name: "VOCÊ 💕", desc: "A pessoa que eu escolhi para viver ao meu lado." }
+  ];
 
-  <script>
-    const profiles = [
-      { img: "https://via.placeholder.com/300x200.png?text=Perfil+1", name: "Leandro Sales(a), 28", desc: "Apaixonado(a) por aventuras e bons momentos." },
-      { img: "https://via.placeholder.com/300x200.png?text=Nós+6+Anos", name: "Nós, 6 Anos", desc: "Entre tempestades e bonanças, nosso amor e amizade sempre floresceram..." },
-      { img: "https://via.placeholder.com/300x200.png?text=VOCÊ", name: "VOCÊ 💕", desc: "A pessoa que eu escolhi para viver ao meu lado." }
-    ];
+  let current = 0;
+  const card = document.getElementById("profileCard");
 
-    let current = 0;
+  function updateProfile() {
+    if (current < profiles.length) {
+      card.querySelector("img").src = profiles[current].img;
+      card.querySelector("h3").textContent = profiles[current].name;
+      card.querySelector("p").textContent = profiles[current].desc;
+    } else {
+      card.style.display = "none";
+      document.getElementById("final").style.display = "block";
+    }
+  }
 
-    function nextProfile() {
+  function nextProfile() {
+    card.style.opacity = 0;
+    card.style.transform = "translateX(-100px)";
+    setTimeout(() => {
       current++;
-      if (current < profiles.length) {
-        const card = document.getElementById("profileCard");
-        card.querySelector("img").src = profiles[current].img;
-        card.querySelector("h3").textContent = profiles[current].name;
-        card.querySelector("p").textContent = profiles[current].desc;
-      } else {
-        document.getElementById("profileCard").style.display = "none";
-        document.getElementById("final").style.display = "block";
-      }
-    }
+      updateProfile();
+      card.style.opacity = 1;
+      card.style.transform = "translateX(0)";
+    }, 300);
+  }
 
-    function showGIF() {
-      document.getElementById("final").style.display = "none";
-      const gifScreen = document.getElementById("gifScreen");
-      gifScreen.style.display = "flex";
-      document.getElementById("audio").play();
+  function showGIF() {
+    document.getElementById("final").style.display = "none";
+    const gifScreen = document.getElementById("gifScreen");
+    gifScreen.style.display = "flex";
+
+    const audio = document.getElementById("audio");
+    audio.play().catch(() => {
+      const playBtn = document.createElement('button');
+      playBtn.textContent = "▶️ Tocar música";
+      playBtn.style = "margin-top:15px; padding:10px 20px; font-size:16px; border:none; border-radius:10px; background:#fff; color:#ff4081; cursor:pointer;";
+      gifScreen.appendChild(playBtn);
+      playBtn.onclick = () => { audio.play(); playBtn.remove(); };
+    });
+  }
+
+  /* 💫 Função de arrastar pro lado (Swipe) */
+  let startX = 0;
+  let isDragging = false;
+
+  card.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  });
+
+  card.addEventListener("touchmove", e => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    card.style.transform = `translateX(${diff}px) rotate(${diff / 20}deg)`;
+  });
+
+  card.addEventListener("touchend", e => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = e.changedTouches[0].clientX - startX;
+    if (Math.abs(diff) > 80) {
+      nextProfile();
+    } else {
+      card.style.transform = "translateX(0)";
     }
-  </script>
+  });
+
+  // Suporte a mouse também
+  card.addEventListener("mousedown", e => { startX = e.clientX; isDragging = true; });
+  window.addEventListener("mousemove", e => {
+    if (!isDragging) return;
+    const diff = e.clientX - startX;
+    card.style.transform = `translateX(${diff}px) rotate(${diff / 20}deg)`;
+  });
+  window.addEventListener("mouseup", e => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = e.clientX - startX;
+    if (Math.abs(diff) > 80) {
+      nextProfile();
+    } else {
+      card.style.transform = "translateX(0)";
+    }
+  });
+</script>
 </body>
 </html>
