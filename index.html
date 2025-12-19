@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -131,7 +132,7 @@
     width: 60px;
     height: 60px;
     border: none;
-    border-radius: 50%;
+    border-radius: 30%;
     cursor: pointer;
     font-size: 28px;
     display: flex;
@@ -143,13 +144,13 @@
   .btn:hover { transform: scale(1.1); }
 
   .no {
-    background-color: #ff4458;
+    background-color: transparent;
     color: white;
     box-shadow: 0 4px 10px rgba(255,68,88,0.5);
   }
 
   .yes {
-    background-color: #1ed760;
+    background-color: transparent;
     color: white;
     box-shadow: 0 4px 10px rgba(30,215,96,0.5);
   }
@@ -207,7 +208,7 @@
       <p>Palmeirense doente, às vezes meio chato 😅</p>
       <div class="buttons">
         <button class="btn no" onclick="nextProfile()">❌</button>
-        <button class="btn yes" onclick="nextProfile()">💚</button>
+        <button class="btn yes" onclick="nextProfile()">❤️</button>
       </div>
     </div>
 
@@ -215,8 +216,8 @@
     <div class="card" id="final">
       <h2>💍 Thais Quer casar comigo?</h2>
       <div class="buttons">
-        <button class="btn no" onclick="alert('Você disse não 😢')">❌</button>
-        <button class="btn yes" onclick="showGIF()">💚</button>
+        <button class="btn no" onclick="showNoGIF()">❌</button>
+        <button class="btn yes" onclick="showGIF()">❤️</button>
       </div>
     </div>
 
@@ -226,8 +227,27 @@
       <img src="https://media1.tenor.com/m/HBwkcxybzS8AAAAd/smallville-clark-kent.gif" alt="Gif do amor">
       <audio id="audio" src="assets/sounds/Coldplay_Cold_Play_Yellow.mp3" autoplay></audio>
     </div>
-  </div>
+	
+<!-- GIF FINAL - NÃO -->
+<div id="gifScreenNo"
+     style="display:none; text-align:center; flex-direction:column; align-items:center; width:90%; max-width:600px; animation: fadeIn 1.5s ease forwards;">
+  <h2 style="color:#fff; margin-bottom:20px;">😅 Se ferrou!</h2>
+
+  <!-- Substitua o src abaixo pelo seu GIF preferido do GTA "Se ferrou" -->
+  <img src= "https://c.tenor.com/ivrqrn5qtvwAAAAC/tenor.gif"
+
+  <!-- Se quiser som na tela do 'não', descomente e ajuste o caminho do arquivo -->
+  <audio id="audio" src="assets/sounds/ohsefudeu.mp3" autoplay></audio>
+
 </div>
+
+	
+  </div>
+  
+</div>
+
+
+
 
 <script>
   const profiles = [
@@ -275,6 +295,37 @@
       playBtn.onclick = () => { audio.play(); playBtn.remove(); };
     });
   }
+  
+  
+  function showNoGIF() {
+    // Oculta o card final
+    document.getElementById("final").style.display = "none";
+
+    // Oculta a tela de "sim" caso esteja visível
+    const gifScreen = document.getElementById("gifScreen");
+    if (gifScreen) gifScreen.style.display = "none";
+
+    // Mostra tela de "não"
+    const gifScreenNo = document.getElementById("gifScreenNo");
+    gifScreenNo.style.display = "flex";
+
+    // Se quiser tocar áudio de "não", descomente:
+       /*
+    const audioNo = document.getElementById("audioNo");
+    if (audioNo) {
+      audioNo.play().catch(() => {
+        const playBtnNo = document.createElement('button');
+        playBtnNo.textContent = "▶️ Tocar som";
+        playBtnNo.style = "margin-top:15px; padding:10px 20px; font-size:16px; border:none; border-radius:10px; background:#fff; color:#ff4081; cursor:pointer;";
+        gifScreenNo.appendChild(playBtnNo);
+        playBtnNo.onclick = () => { audioNo.play(); playBtnNo.remove(); };
+      });
+    }
+    */
+  }
+
+  
+  
 
   /* 💫 Função de arrastar pro lado (Swipe) */
   let startX = 0;
