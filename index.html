@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -89,6 +88,60 @@
     width: 100%; height: 100%;
     background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
     pointer-events: none;
+  }
+
+  /* Splash Screen (Tela Inicial) */
+  #splashScreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 46px;
+    background: linear-gradient(180deg, #fd297b, #ff5864);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+    animation: splashIn 1.2s ease forwards;
+  }
+
+  #splashScreen h1 {
+    font-size: 40px;
+    margin: 0;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  #splashScreen .logo {
+    font-size: 65px;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite;
+  }
+
+  #splashScreen p {
+    margin-top: 15px;
+    font-size: 16px;
+    color: white;
+    opacity: 0.9;
+    font-weight: 500;
+  }
+
+  @keyframes splashIn {
+    from {opacity: 0; transform: scale(1.1);}
+    to {opacity: 1; transform: scale(1);}
+  }
+
+  @keyframes splashOut {
+    from {opacity: 1; transform: scale(1);}
+    to {opacity: 0; transform: scale(0.95);}
+  }
+
+  @keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.12);}
+    100% {transform: scale(1);}
   }
 
   /* Cartão de perfil */
@@ -201,8 +254,16 @@
   </div>
 
   <div class="screen">
+
+    <!-- TELA INICIAL SPLASH -->
+    <div id="splashScreen">
+      <div class="logo">🔥</div>
+      <h1>Tinder</h1>
+      <p>Tudo começou com um match! 💖</p>
+    </div>
+
     <!-- PERFIL -->
-    <div class="card" id="profileCard">
+    <div class="card" id="profileCard" style="display:none;">
       <img src="img/Eu.PNG" alt="Perfil">
       <h3>Leandro Sales(a), 37</h3>
       <p>Palmeirense doente, às vezes meio chato 😅</p>
@@ -227,34 +288,42 @@
       <img src="https://media1.tenor.com/m/HBwkcxybzS8AAAAd/smallville-clark-kent.gif" alt="Gif do amor">
       <audio id="audio" src="assets/sounds/Coldplay_Cold_Play_Yellow.mp3" autoplay></audio>
     </div>
-	
-<!-- GIF FINAL - NÃO -->
-<div id="gifScreenNo"
-     style="display:none; text-align:center; flex-direction:column; align-items:center; width:90%; max-width:600px; animation: fadeIn 1.5s ease forwards;">
-  <h2 style="color:#fff; margin-bottom:20px;">😅 Se ferrou!</h2>
 
-  <!-- Substitua o src abaixo pelo seu GIF preferido do GTA "Se ferrou" -->
-  <img src= "https://c.tenor.com/ivrqrn5qtvwAAAAC/tenor.gif"
+    <!-- GIF FINAL - NÃO -->
+    <div id="gifScreenNo"
+      style="display:none; text-align:center; flex-direction:column; align-items:center; width:90%; max-width:600px; animation: fadeIn 1.5s ease forwards;">
+      <h2 style="color:#fff; margin-bottom:20px;">😅 Se ferrou!</h2>
 
-  <!-- Se quiser som na tela do 'não', descomente e ajuste o caminho do arquivo -->
-    <audio id="audioNo" src="assets/sounds/ohsefudeu.mp3" autoplay></audio>
+      <img src="https://c.tenor.com/ivrqrn5qtvwAAAAC/tenor.gif" alt="Gif Se Ferrou">
 
+      <audio id="audioNo" src="assets/sounds/ohsefudeu.mp3" autoplay></audio>
+    </div>
 
-</div>
-
-	
   </div>
-  
 </div>
-
-
-
 
 <script>
+  // Splash Screen - some e mostra o perfil
+  window.addEventListener("load", () => {
+    const splash = document.getElementById("splashScreen");
+    const profileCard = document.getElementById("profileCard");
+
+    setTimeout(() => {
+      splash.style.animation = "splashOut 1s ease forwards";
+
+      setTimeout(() => {
+        splash.style.display = "none";
+        profileCard.style.display = "block";
+      }, 900);
+
+    }, 2600); // tempo que a tela inicial fica visível
+  });
+
   const profiles = [
     { img: "img/Eu.PNG", name: "Leandro Sales(a), 37", desc: "Palmeirense doente, às vezes meio chato 😅" },
-    { img: "img/nos_principal.png", name: "Nós, 6 Anos", desc: "Entre tempestades e bonanças, nosso amor sempre floresceu 💞" },
-    { img: "img/Voce.png", name: "VOCÊ 💕", desc: "A pessoa que eu escolhi para viver ao meu lado." }
+    { img: "img/Voce.png", name: "VOCÊ 💕", desc: "A pessoa que eu escolhi para viver ao meu lado." },
+	{ img: "img/nos_principal.png", name: "Nós, 6 Anos", desc: "Entre tempestades e bonanças, nosso amor sempre floresceu 💞" }
+    
   ];
 
   let current = 0;
@@ -296,22 +365,16 @@
       playBtn.onclick = () => { audio.play(); playBtn.remove(); };
     });
   }
-  
-  
+
   function showNoGIF() {
-    // Oculta o card final
     document.getElementById("final").style.display = "none";
 
-    // Oculta a tela de "sim" caso esteja visível
     const gifScreen = document.getElementById("gifScreen");
     if (gifScreen) gifScreen.style.display = "none";
 
-    // Mostra tela de "não"
     const gifScreenNo = document.getElementById("gifScreenNo");
     gifScreenNo.style.display = "flex";
 
-    // Se quiser tocar áudio de "não", descomente:
-       
     const audioNo = document.getElementById("audioNo");
     if (audioNo) {
       audioNo.play().catch(() => {
@@ -323,9 +386,6 @@
       });
     }
   }
-
-  
-  
 
   /* 💫 Função de arrastar pro lado (Swipe) */
   let startX = 0;
